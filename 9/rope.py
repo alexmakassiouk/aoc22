@@ -46,8 +46,8 @@ tail = Knot()
 
 def main():
     for line in lines:
-        direction = line[0]
-        distance = int(line[2])
+        direction = line.split(" ")[0]
+        distance = int(line.split(" ")[1][:-1])
 
         for i in range(distance):
             prev_pos = str(head.x)+" "+str(head.y)
