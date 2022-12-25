@@ -1,5 +1,5 @@
 from math import sqrt
-with open('9/input.txt') as f:
+with open('9/example2.txt') as f:
     lines = f.readlines()
 
 
@@ -42,7 +42,16 @@ class Knot:
 
 
 head = Knot()
+k1 = Knot()
+k2 = Knot()
+k3 = Knot()
+k4 = Knot()
+k5 = Knot()
+k6 = Knot()
+k7 = Knot()
+k8 = Knot()
 tail = Knot()
+knots = [head, k1, k2, k3, k4, k5, k6, k7, k8, tail]
 
 def main():
     for line in lines:
@@ -50,13 +59,16 @@ def main():
         distance = int(line.split(" ")[1][:-1])
 
         for i in range(distance):
-            prev_pos = str(head.x)+" "+str(head.y)
+            prev_positions = []
+            for knot in knots:
+                prev_positions.append(str(knot.x) + " " + str(knot.y))
             head.move_knot(direction)
-            if tail.distance_to(head) > 1:
-                tail.x = int(prev_pos.split(" ")[0])
-                tail.y = int(prev_pos.split(" ")[1])
-                if prev_pos not in tail.unique_locs:
-                    tail.unique_locs.append(prev_pos)
+            for j in range(1,len(knots)):
+                if knots[j].distance_to(knots[j-1]) > 1:
+                    knots[j].x = int(prev_positions[j-1].split(" ")[0])
+                    knots[j].y = int(prev_positions[j-1].split(" ")[1])
+                    if j==9 and prev_positions[j-1] not in tail.unique_locs:
+                        tail.unique_locs.append(prev_positions[j-1])
         # if tail.is_diagonal(head) and distance > 1:
         #     tail.x = head.x
         #     tail.y = head.y
